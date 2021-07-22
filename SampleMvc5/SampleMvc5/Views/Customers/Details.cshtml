@@ -1,0 +1,11 @@
+﻿@model SampleMvc5.Models.Customer
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details of Customer</h2>
+
+<h3>@Model.Name</h3>
+<h3>@Model.Id</h3>
+@Html.ActionLink("Go Back", "Index")
+

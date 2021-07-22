@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SampleMvc5.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customers</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+@if (!Model.Any())
+{
+
+
+    <p>There is no customers !</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => customer.Name)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = customer.Id }) |
+                    @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null) |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = customer.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>}
