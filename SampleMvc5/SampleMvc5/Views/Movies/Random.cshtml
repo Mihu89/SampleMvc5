@@ -1,11 +1,32 @@
-﻿@model SampleMvc5.Models.Movie
+﻿@model SampleMvc5.ViewModels.RandomMovieViewModel
 
 @{
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Watch a Random Movie</h2>
+@*
+   Multi line
+    Comment
 
-<b>@Model.Name</b>
+*@
+<h1>Watch a Random Movie</h1>
+
+<h3>@Model.Movie.Name</h3>
+
+@if (Model.Customers.Count == 0)
+{
+    <text>No customers</text>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+
+
 

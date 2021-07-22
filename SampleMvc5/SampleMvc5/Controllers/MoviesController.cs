@@ -1,4 +1,5 @@
 ﻿using SampleMvc5.Models;
+using SampleMvc5.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,19 @@ namespace SampleMvc5.Controllers
         {
             var movie = new Movie() { Name = "Iron Man - 4" };
 
-            return View(movie);
+            var customers = new List<Customer>
+            {
+                new Customer{Name = "John Rambo"},
+                new Customer{Name = "Robert Downey" }
+            };
+
+            var viewModel = new RandomMovieViewModel()
+            {
+                Movie = movie,
+                Customers = customers
+            };
+
+            return View(viewModel);
         }
     }
 }
