@@ -9,17 +9,30 @@ namespace SampleMvc5.Controllers
 {
     public class CustomersController : Controller
     {
+        private ApplicationDbContext _dbContext;
         // GET: Customers
+        public CustomersController()
+        {
+            _dbContext = new ApplicationDbContext();
+        }
+
+        // dispose/destroy _dbContext
+        protected override void Dispose(bool disposing)
+        {
+            _dbContext.Dispose();
+        }
         public ActionResult Index()
         {
-            var customers = GetCustomers();
+            //var customers = GetCustomers();
+            var customers = _dbContext.Customers.ToList();
 
             return View(customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
+            //var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
+            var customer = _dbContext.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
             {
                 return HttpNotFound();

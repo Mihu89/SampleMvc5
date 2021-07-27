@@ -8,6 +8,10 @@ using System.Web.Mvc;
 
 namespace SampleMvc5.Controllers
 {
+    [Authorize(Roles ="Admin, manager")] // or
+    /* USE WHEN BOTH ROLES ARE NEEDED
+    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "manager")] */
     public class MoviesController : Controller
     {
         public ViewResult Index()
@@ -25,6 +29,8 @@ namespace SampleMvc5.Controllers
                 new Movie(){ Id = 3, Name="Black Widow"},
             };
         }
+
+        [AllowAnonymous]
         // GET: Movies/Random
         public ActionResult Random()
         {

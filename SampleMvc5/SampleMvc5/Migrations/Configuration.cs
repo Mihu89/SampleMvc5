@@ -18,6 +18,13 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+           // context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Manager" });
+
+            //context.Customers.AddOrUpdate(
+            //    c => c.Name,
+            //    new Models.Customer { Name = "John Smith" },
+            //    new Models.Customer { Name = "Filip Kirkorov" });
+            //context.SaveChanges();
         }
     }
 }
