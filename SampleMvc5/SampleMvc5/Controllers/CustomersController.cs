@@ -24,7 +24,7 @@ namespace SampleMvc5.Controllers
         public ActionResult Index()
         {
             //var customers = GetCustomers();
-            var customers = _dbContext.Customers.ToList();
+            var customers = _dbContext.Customers.Include("MembershipType").ToList();
 
             return View(customers);
         }
@@ -32,7 +32,7 @@ namespace SampleMvc5.Controllers
         public ActionResult Details(int id)
         {
             //var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
-            var customer = _dbContext.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _dbContext.Customers.Include("MembershipType").SingleOrDefault(c => c.Id == id);
             if (customer == null)
             {
                 return HttpNotFound();

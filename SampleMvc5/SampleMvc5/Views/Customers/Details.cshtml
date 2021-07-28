@@ -8,5 +8,9 @@
 <h3>@Model.Name</h3>
 <h3>@Model.Id</h3>
 <h3>@Model.IsSubscribedToNewsletter</h3>
+<ul>
+    <li>Membership Type: @Model.MembershipType.Name</li>
+    <li>My Discount: @Model.MembershipType.DiscountRate <b>%</b></li>
+</ul>
 @Html.ActionLink("Go Back", "Index")
 

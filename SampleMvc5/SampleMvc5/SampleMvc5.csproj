@@ -177,10 +177,15 @@
     <Compile Include="Migrations\202107271709429_AddCustomers.designer.cs">
       <DependentUpon>202107271709429_AddCustomers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107271733131_AddMembershipTypeName.cs" />
+    <Compile Include="Migrations\202107271733131_AddMembershipTypeName.designer.cs">
+      <DependentUpon>202107271733131_AddMembershipTypeName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -260,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107271709429_AddCustomers.resx">
       <DependentUpon>202107271709429_AddCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107271733131_AddMembershipTypeName.resx">
+      <DependentUpon>202107271733131_AddMembershipTypeName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
