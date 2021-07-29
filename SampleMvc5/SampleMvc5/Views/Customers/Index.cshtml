@@ -5,6 +5,7 @@
 }
 
 <h2>Customers</h2>
+<button><a href="Customers/New">Add Customer</a></button>
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -38,7 +39,7 @@ else
                     @Html.DisplayFor(modelItem => customer.MembershipType.Name)
                 </td>
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |*@
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = customer.Id }) |
                     @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null) |
                     @*@Html.ActionLink("Delete", "Delete", new { id = customer.Id })*@

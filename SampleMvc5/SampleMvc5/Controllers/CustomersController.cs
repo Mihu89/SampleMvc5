@@ -1,4 +1,5 @@
 ﻿using SampleMvc5.Models;
+using SampleMvc5.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,73 @@ namespace SampleMvc5.Controllers
 
             return View(customer);
         }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _dbContext.MembershipTypes.ToArray();
+            var customerFormViewModel = new CustomerFormViewModel
+            {
+                Customer = new Customer(),
+                MembershipTypes = membershipTypes
+            };
+
+            return View("CustomerForm", customerFormViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Customer customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                var customerViewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _dbContext.MembershipTypes.ToArray()
+                };
+                return View("CustomerForm", customerViewModel);
+            }
+            if (customer.Id == 0)
+            {
+                // insert
+                var birth = DateTime.Parse(customer.BirthDate.ToString("dd/MM/yyyyy"));
+                customer.BirthDate = birth;
+                _dbContext.Customers.Add(customer);
+            }
+            else
+            {
+                // update
+                var existingCustomer = _dbContext.Customers.Include("MembershipType").FirstOrDefault(x => x.Id == customer.Id);
+                if (existingCustomer != null)
+                {
+                    existingCustomer.Name = customer.Name;
+                    existingCustomer.BirthDate = customer.BirthDate;
+                    existingCustomer.MembershipTypeId = customer.MembershipTypeId;
+                    existingCustomer.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                }
+            }
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+
+            var customerViewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _dbContext.MembershipTypes.ToArray()
+            };
+
+            return View("CustomerForm", customerViewModel);
+        }
+
         private IEnumerable<Customer> GetCustomers()
         {
             return new List<Customer>
