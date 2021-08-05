@@ -15,7 +15,8 @@ namespace SampleMvc5
     {
         protected void Application_Start()
         {
-           /// Mapper
+            /// Mapper
+            AutoMapperConfig.Init();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

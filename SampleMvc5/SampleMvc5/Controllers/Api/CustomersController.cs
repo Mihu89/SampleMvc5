@@ -12,25 +12,25 @@ namespace SampleMvc5.Controllers.Api
     public class CustomersController : ApiController
     {
         private ApplicationDbContext _dbContext;
-        private static IMapper Mapper { get; set; }
+        private readonly IMapper mapper;
 
         public CustomersController()
         {
             _dbContext = new ApplicationDbContext();
-            //Mapper.ConfigurationProvider(MappingProfile);
+            mapper = AutoMapperConfig.Mapper;
         }
 
         // GET /api/customers
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            //var customers = _dbContext.Customers.ToList().Select(c => Mapper.Map<Customer, CustomerDto>(c));
-            var customers = new List<CustomerDto>
-            {
-                new CustomerDto{Id=1,Name = "John Rambo"},
-                new CustomerDto{Id=2,Name = "Robert Downey" },
-                new CustomerDto{Id=3,Name = "Tom Cruise" },
-            };
-            return customers;
+            var customers = _dbContext.Customers.ToList();
+            //var customers = new List<CustomerDto>
+            //{
+            //    new CustomerDto{Id=1,Name = "John Rambo"},
+            //    new CustomerDto{Id=2,Name = "Robert Downey" },
+            //    new CustomerDto{Id=3,Name = "Tom Cruise" },
+            //};
+            return mapper.Map<List<CustomerDto>>(customers);
         }
 
         // GET /api/customers/1
