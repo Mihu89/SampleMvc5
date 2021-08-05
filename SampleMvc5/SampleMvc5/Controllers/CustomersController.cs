@@ -22,12 +22,13 @@ namespace SampleMvc5.Controllers
         {
             _dbContext.Dispose();
         }
-        public ActionResult Index()
+        public ViewResult Index()
         {
             //var customers = GetCustomers();
-            var customers = _dbContext.Customers.Include("MembershipType").ToList();
+            //var customers = _dbContext.Customers.Include("MembershipType").ToList();
 
-            return View(customers);
+            //return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)

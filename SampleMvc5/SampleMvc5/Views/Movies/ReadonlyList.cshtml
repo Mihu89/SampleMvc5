@@ -1,0 +1,37 @@
+﻿@model IEnumerable<SampleMvc5.Models.Movie>
+@{
+    ViewBag.Title = "ReadonlyList";
+}
+
+<h2>Movies</h2>
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Movies</th>
+            <th>Genres</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+@section scripts
+    {
+    <script>
+        $.document.ready(function () {
+            var table = $("#movie").DataTable({
+                ajax: {
+                    url: "api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "genre.name"
+                    }]
+            });
+        });
+    </script>
+}
+

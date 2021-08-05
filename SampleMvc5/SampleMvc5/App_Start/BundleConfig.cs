@@ -20,11 +20,16 @@ namespace SampleMvc5
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootbox.js",
+                      "~/Scripts/jquery.datatables.js",
+                      "~/Scripts/dataTables.bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/DataTables-1.10.25/dataTables.bootstrap.css"
+                      ));
         }
     }
 }

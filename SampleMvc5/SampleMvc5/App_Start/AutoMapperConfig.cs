@@ -16,6 +16,8 @@ namespace SampleMvc5.App_Start
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Customer, CustomerDto>();
+                cfg.CreateMap<Movie, MovieDto>();
+                cfg.CreateMap<MembershipType, MembershipTypeDto>();
                 //.ForMember(dst => dst.Id, src => src.MapFrom(y => y.Id));
             });
 

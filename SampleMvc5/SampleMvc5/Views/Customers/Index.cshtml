@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SampleMvc5.Models.Customer>
+﻿@*@model IEnumerable<SampleMvc5.Models.Customer>*@
 
 @{
     ViewBag.Title = "Index";
@@ -10,67 +10,117 @@
 @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>*@
-@if (!Model.Any())
-{
+
+    @*@if (!Model.Any())
+    {
 
 
-    <p>There is no customers !</p>
-}
-else
-{
-    <table class="table table-bordered table-hover" id="customers">
+        <p>There is no customers !</p>
+    }
+    else
+    {//here was tables }*@
+        <table class="table table-bordered table-hover" id="customers">
+            @*<tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MembershipType)
+                    </th>
+                    <th>Actions</th>
+                </tr>*@
+
+@*@foreach (var customer in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>  
-            <th>
-                @Html.DisplayNameFor(model => model.MembershipType)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.MembershipType.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = customer.Id }) |
+                @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null) |
+                @Html.ActionLink("delete", "delete", new { id = customer.Id })
+                <button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button>
+            </td>
         </tr>
-
-        @foreach (var customer in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => customer.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => customer.MembershipType.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = customer.Id }) |
-                    @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null) |
-                    @Html.ActionLink("delete", "delete", new { id = customer.Id })
-                    <button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button>
-                </td>
-            </tr>
-        }
-
-    </table>}
+    }*@
+<thead>
+    <th>
+        Customer Name
+    </th>
+    <th>
+        Membership Type
+    </th>
+    <th>Actions</th>
+</thead>
+<tbody></tbody>
+    </table>
 
 @section scripts{
     <script>
         $(document).ready(function () {
-            $("#customers .js-delete").on("click", function () {
+           // $("#customers").DataTable();
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers/getcustomers",
+                    dataSrc: "",
+                    contentType: "application/json; charset=utf-8"
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    { data: "name" },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+            $("#customers").on("click", ".js-delete", function () {
                 var button = $(this);
 
-                if (confirm("Are you sure you need to delete this customer ?")) {
-                    $.ajax({
-                        url: "/api/customers/" + button.attr("data-customer-id"),
-                        method: "DELETE",
-                        contentType: "application/json; charset=utf-8",
-                        success: function () {
-                            button.parents("tr").remove();
-                        },
-                        error: function (e) {
-                            alert(e);
+                //if (confirm("Are you sure you need to delete this customer ?")) {
+                //    $.ajax({
+                //        url: "/api/customers/" + button.attr("data-customer-id"),
+                //        method: "DELETE",
+                //        contentType: "application/json; charset=utf-8",
+                //        success: function () {
+                //            button.parents("tr").remove();
+                //        },
+                //        error: function (e) {
+                //            alert(e);
+                //        }
+                //    });
+                //}
+                bootbox.confirm("Are you sure you need to delete this customer ?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/customers/" + button.attr("data-customer-id"),
+                                method: "DELETE",
+                                contentType: "application/json; charset=utf-8",
+                                success: function () {
+                                    //button.parents("tr").remove();
+                                    table.row(button.parents("tr")).remove().draw();
+                                },
+                                error: function (e) {
+                                    alert(e);
+                                }
+                            });
                         }
                     });
-                }
             })
         });
     </script>
-    
-    }
+
+}

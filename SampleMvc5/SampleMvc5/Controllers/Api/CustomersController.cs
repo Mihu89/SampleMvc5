@@ -21,17 +21,22 @@ namespace SampleMvc5.Controllers.Api
         }
 
         // GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            var customers = _dbContext.Customers.ToList();
             //var customers = new List<CustomerDto>
             //{
             //    new CustomerDto{Id=1,Name = "John Rambo"},
             //    new CustomerDto{Id=2,Name = "Robert Downey" },
             //    new CustomerDto{Id=3,Name = "Tom Cruise" },
             //};
-            return mapper.Map<List<CustomerDto>>(customers);
+            var customers = _dbContext.Customers
+                .Include("MembershipType")
+                .ToList()
+                .Select(mapper.Map<Customer, CustomerDto>);
+            //return mapper.Map<List<CustomerDto>>(customers);
+            return Ok(customers);
         }
+
 
         // GET /api/customers/1
         public IHttpActionResult GetCustomer(int id)

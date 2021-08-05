@@ -16,8 +16,13 @@ namespace SampleMvc5.Controllers
     {
         public ViewResult Index()
         {
-            var movies = GetMovies();
-            return View(movies);
+            //var movies = GetMovies();
+            //return View(movies);
+            if (User.IsInRole(RoleName.CanManageMovies))
+            {
+                return View();
+            }
+            return View("ReadonlyList");
         }
 
         private IEnumerable<Movie> GetMovies()
@@ -49,6 +54,32 @@ namespace SampleMvc5.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [Authorize(Roles =RoleName.CanManageMovies)]
+        public ViewResult New()
+        {
+            //var genres = _
+            return View();
+        }
+
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public ViewResult Edit(int id)
+        {
+            //var genres = _
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public ViewResult Save(Movie movie)
+        {
+            if (!ModelState.IsValid)
+            {
+
+            }
+            return View();
         }
     }
 }

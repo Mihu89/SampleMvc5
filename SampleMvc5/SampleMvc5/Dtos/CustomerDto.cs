@@ -14,6 +14,7 @@ namespace SampleMvc5.Dtos
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
         public int MembershipTypeId { get; set; }
+        public MembershipTypeDto MembershipType { get; set; }
         public DateTime BirthDate { get; set; }
     }
 }
