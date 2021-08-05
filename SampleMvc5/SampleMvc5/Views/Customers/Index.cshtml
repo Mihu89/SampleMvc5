@@ -18,7 +18,7 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="customers">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -42,9 +42,34 @@ else
                     @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = customer.Id }) |
                     @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null) |
-                    @*@Html.ActionLink("Delete", "Delete", new { id = customer.Id })*@
+                    @Html.ActionLink("delete", "delete", new { id = customer.Id })
+                    <button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button>
                 </td>
             </tr>
         }
 
     </table>}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#customers .js-delete").on("click", function () {
+                var button = $(this);
+
+                if (confirm("Are you sure you need to delete this customer ?")) {
+                    $.ajax({
+                        url: "~/api/customers/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function () {
+                            button.parents("tr").remove();
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+    
+    }

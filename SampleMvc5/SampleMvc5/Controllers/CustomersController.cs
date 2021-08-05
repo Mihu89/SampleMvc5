@@ -56,7 +56,7 @@ namespace SampleMvc5.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Customer customer)
+        public ActionResult Save([Bind(Exclude = "MembershipType")] Customer customer)
         {
             if (!ModelState.IsValid)
             {
