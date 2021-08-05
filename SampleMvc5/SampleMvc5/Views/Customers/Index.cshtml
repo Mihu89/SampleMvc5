@@ -58,8 +58,9 @@ else
 
                 if (confirm("Are you sure you need to delete this customer ?")) {
                     $.ajax({
-                        url: "~/api/customers/" + button.attr("data-customer-id"),
+                        url: "/api/customers/" + button.attr("data-customer-id"),
                         method: "DELETE",
+                        contentType: "application/json; charset=utf-8",
                         success: function () {
                             button.parents("tr").remove();
                         },
