@@ -14,15 +14,17 @@ namespace SampleMvc5.Controllers.Api
         {
             _dbContext = new ApplicationDbContext();
         }
+
         // GET: Movies
         public IEnumerable<MovieDto> GetMovies()
         {
-            return _dbContext.Movies.ToList().Select(x => new MovieDto
+            var movies = _dbContext.Movies.ToList().Select(x => new MovieDto
             {
                 Id = x.Id,
                 Name = x.Name,
                 // all
             });
+            return movies;
         }
 
         public IHttpActionResult GetMovie(int id)
